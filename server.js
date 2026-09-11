@@ -3,6 +3,8 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
+const quizRoutes = require("./routes/quizRoutes");
+
 
 dotenv.config();
 
@@ -10,9 +12,11 @@ const app = express();
 
 app.use(express.json());
 
+
 connectDB();
 
 app.use("/auth", authRoutes);
+app.use("/quizzes", quizRoutes);
 
 app.get("/", (req, res) => {
     res.json({

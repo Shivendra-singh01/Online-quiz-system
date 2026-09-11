@@ -17,6 +17,7 @@ const quizSchema = new mongoose.Schema(
             required: true
         }
     },
+    
     {
         timestamps: true
     }
