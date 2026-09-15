@@ -4,6 +4,7 @@ const connectDB = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
 const quizRoutes = require("./routes/quizRoutes");
+const resultRoutes = require("./routes/resultRoutes");
 
 
 dotenv.config();
@@ -17,6 +18,8 @@ connectDB();
 
 app.use("/auth", authRoutes);
 app.use("/quizzes", quizRoutes);
+app.use("/results", resultRoutes);
+
 
 app.get("/", (req, res) => {
     res.json({

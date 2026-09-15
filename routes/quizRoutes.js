@@ -9,7 +9,7 @@ const {
 
 const { submitQuiz } = require("../controllers/resultController");
 
-
+const quizOwnerMiddleware = require("../middleware/quizOwnerMiddleware");
 const authMiddleware = require("../middleware/authMiddleware");
 const adminMiddleware = require("../middleware/adminMiddleware");
 
@@ -26,6 +26,7 @@ router.post(
     "/:quizId/questions",
     authMiddleware,
     adminMiddleware,
+    quizOwnerMiddleware,
     addQuestion
 );
 
