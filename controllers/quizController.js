@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 const Quiz = require("../models/Quiz");
 
 const Question = require("../models/Question");
@@ -86,6 +88,13 @@ const getQuizzes = async (req, res) => {
 const getQuestionsByQuiz = async (req, res) => {
     try {
         const { quizId } = req.params;
+
+        // Validate BEFORE querying MongoDB
+        if (!mongoose.Types.ObjectId.isValid(quizId)) {
+            return res.status(400).json({
+                message: "Invalid quiz ID"
+            });
+        }
 
         const questions = await Question.find({ quizId });
 

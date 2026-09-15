@@ -147,7 +147,7 @@ const getQuizResults = async (req, res) => {
 
         const results = await Result.find({ quizId })
             .populate("userId", "name email")
-            .sort({ score: -1 });
+            .sort({ score: -1 , createdAt: 1});
 
         const formattedResults = results.map(result => ({
             resultId: result._id,
