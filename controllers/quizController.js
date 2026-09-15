@@ -68,4 +68,52 @@ const addQuestion = async (req, res) => {
     }
 };
 
-module.exports = { createQuiz, addQuestion };
+const getQuizzes = async (req, res) => {
+    try {
+        const quizzes = await Quiz.find();
+
+        res.json({
+            quizzes
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+const getQuestionsByQuiz = async (req, res) => {
+    try {
+        const { quizId } = req.params;
+
+        const questions = await Question.find({ quizId });
+
+        if (questions.length === 0) {
+            return res.status(404).json({
+                message: "No questions found for this quiz"
+            });
+        }
+
+        // Don't send correct answers to the student
+        const safeQuestions = questions.map(question => ({
+            _id: question._id,
+            questionText: question.questionText,
+            options: question.options.map(option => ({
+                _id: option._id,
+                text: option.text
+            }))
+        }));
+
+        res.json({
+            questions: safeQuestions
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+module.exports = { createQuiz, addQuestion, getQuizzes , getQuestionsByQuiz};
